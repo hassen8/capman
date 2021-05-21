@@ -10,68 +10,70 @@ import pcap.spi.Service;
 
 public class PacketSniffer {
 
-  PacketSniffer() {
-  }
-
-  public Service createService() {
-    Service service = null;
-
-    try {
-      service = Service.Creator.create("PcapService");
-    } catch (Exception ex) {
-      System.out.println("Could not create service: " + ex);
+    PacketSniffer() {
     }
 
-    return service;
-  }
+    public Service createService() {
+        Service service = null;
 
-  public Interface getDevice(Service service) {
-    Interface device = null;
+        try {
+            service = Service.Creator.create("PcapService");
+        } catch (Exception ex) {
+            System.out.println("Could not create service: " + ex);
+        }
 
-    try {
-      Iterator<Interface> devices = service.interfaces().iterator();
-      device = devices.next();
-      System.out.println("Device selected: " + device.name());
-    } catch (Exception ex) {
-      System.out.println("Could not get device: " + ex);
+        return service;
     }
 
-    return device;
-  }
+    public Interface getDevice(Service service, int deviceIndex) {
+        Interface device = null;
 
-  public ArrayList<Packet> readFile() {
-    ArrayList<Packet> packets = new ArrayList<>();
+        try {
+            Iterator<Interface> devices = service.interfaces().iterator();
+            for (int i = 0; i <= deviceIndex; i++) {
+                device = devices.next();
+            }
+            System.out.println("Device selected: " + device.name());
+        } catch (Exception ex) {
+            System.out.println("Could not get device: " + ex);
+        }
 
-    try {
-      File file = new File("dump.txt");
-      Scanner reader = new Scanner(file);
-
-      while (reader.hasNextLine()) {
-        String data = reader.nextLine();
-
-        // Parse the data
-        String[] seg = data.split("\\s");
-        String time = seg[0];
-        String ipVersion = seg[1];
-        String source = seg[2];
-        String dest = seg[4];
-
-        Packet packet = new Packet();
-        packet.setTime(time);
-        packet.setIpVersion(ipVersion);
-        packet.setDest(dest);
-        packet.setSource(source);
-        packet.setData(data);
-
-        packets.add(packet);
-      }
-
-      reader.close();
-    } catch (FileNotFoundException e) {
-      System.out.println("Cannot read from file: " + e);
+        return device;
     }
 
-    return packets;
-  }
+    public ArrayList<Packet> readFile() {
+        ArrayList<Packet> packets = new ArrayList<>();
+
+        try {
+            File file = new File("dump.txt");
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+
+                // Parse the data
+                String[] seg = data.split("\\s");
+                String time = seg[0];
+                String ipVersion = seg[1];
+                String source = seg[2];
+                String dest = seg[4];
+
+                Packet packet = new Packet();
+                packet.setTime(time);
+                packet.setIpVersion(ipVersion);
+                packet.setDest(dest);
+                packet.setSource(source);
+                packet.setData(data);
+
+                packets.add(packet);
+            }
+
+            reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Cannot read from file: " + e);
+        }
+
+        return packets;
+    }
 
 }
