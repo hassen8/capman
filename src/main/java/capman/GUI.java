@@ -1,6 +1,7 @@
 package capman;
 
 import java.awt.Color;
+import java.awt.Dialog;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,17 +11,20 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
+import pcap.spi.Interface;
+import pcap.spi.Service;
 
 public class GUI extends javax.swing.JFrame {
 
     DefaultTableModel tbmPackets;
     CaptureTraffic captureThread;
+    Details detail;
+    static int deviceIndex;
+    static Interface device;
 
     /**
      * Creates new form GUI
      */
-    int deviceIndex;
-
     public GUI(int deviceIndex) {
         // Create a table model
         this.deviceIndex = deviceIndex;
@@ -76,7 +80,7 @@ public class GUI extends javax.swing.JFrame {
         menuView = new javax.swing.JMenu();
         save = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        viewDetails = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -133,8 +137,13 @@ public class GUI extends javax.swing.JFrame {
 
         jMenu2.setText("View");
 
-        jMenuItem2.setText("View Device Details");
-        jMenu2.add(jMenuItem2);
+        viewDetails.setText("View Device Details");
+        viewDetails.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewDetailsActionPerformed(evt);
+            }
+        });
+        jMenu2.add(viewDetails);
 
         jMenuBar1.add(jMenu2);
 
@@ -201,12 +210,25 @@ public class GUI extends javax.swing.JFrame {
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         if (captureThread == null) {
-            saveToFile();
+            if (tblPackets.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Capture Some Packets first, you DONUT", "No Captured Packets", JOptionPane.WARNING_MESSAGE);
+            } else {
+                saveToFile();
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Please stop capturing packets to save the file", "Stop The Capture", JOptionPane.WARNING_MESSAGE);
-
         }
     }//GEN-LAST:event_saveActionPerformed
+
+    private void viewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewDetailsActionPerformed
+        detail = new Details();
+        detail.run();
+        DeviceDetails obj = new DeviceDetails(device);
+        obj.setVisible(true);
+        obj.setAlwaysOnTop(true);
+        obj.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+    }//GEN-LAST:event_viewDetailsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,16 +244,16 @@ public class GUI extends javax.swing.JFrame {
 
     public void saveToFile() {
         try {
-            
+
             File file = new File("C:\\cap.txt");
             if (!file.exists()) {
                 file.createNewFile();
             }
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
-            
+
             for (int i = 0; i < tblPackets.getRowCount(); i++) {
-                
+
                 for (int j = 0; j < tblPackets.getColumnCount(); j++) {
                     bw.write(tblPackets.getModel().getValueAt(i, j) + " ");
                 }
@@ -252,12 +274,25 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JLabel lblPacketsCount;
     private javax.swing.JLabel lblPacketsCountText;
     private javax.swing.JMenu menuView;
     private javax.swing.JMenuItem save;
     private javax.swing.JScrollPane scpTblPackets;
     private javax.swing.JTable tblPackets;
+    private javax.swing.JMenuItem viewDetails;
     // End of variables declaration//GEN-END:variables
+}
+
+class Details extends Thread {
+    
+    Interface device;
+    
+    public void run() {
+        PacketSniffer packetSniffer = new PacketSniffer();
+        Service service = packetSniffer.createService();
+        device = packetSniffer.getDevice(service, GUI.deviceIndex);
+        GUI.device = device;
+    }
+
 }
