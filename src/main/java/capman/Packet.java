@@ -2,51 +2,59 @@ package capman;
 
 class Packet {
 
-  String time;
-  String ipVersion;
-  String source;
-  String dest;
-  String data;
+    String time;
+    String ipVersion;
+    String source;
+    String dest;
+    String data;
+    String protocol;
 
-  public void setTime(String time) {
-    // this.time = time.substring(0, 8);
-    this.time = time;
-  }
+    public String getProtocol() {
+        return protocol;
+    }
 
-  public void setIpVersion(String ipVersion) {
-    this.ipVersion = ipVersion;
-  }
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
+    }
 
-  public void setSource(String source) {
-    this.source = source;
-  }
+    public void setTime(String time) {
+        this.time = time;
+    }
 
-  public void setDest(String dest) {
-    this.dest = dest;
-  }
+    public void setIpVersion(String ipVersion) {
+        this.ipVersion = ipVersion;
+    }
 
-  public void setData(String data) {
-    this.data = data;
-  }
+    public void setSource(String source) {
+        this.source = source;
+    }
 
-  public String getTime() {
-    return time;
-  }
+    public void setDest(String dest) {
+        this.dest = dest;
+    }
 
-  public String getIpVersion() {
-    return ipVersion;
-  }
+    public void setData(String data) {
+        this.data = data;
+    }
 
-  public String getSource() {
-    return source;
-  }
+    public String getTime() {
+        return time;
+    }
 
-  public String getDest() {
-    return dest;
-  }
+    public String getIpVersion() {
+        return ipVersion;
+    }
 
-  public String getData() {
-    return data;
-  }
+    public String getSource() {
+        return source;
+    }
+
+    public String getDest() {
+        return dest;
+    }
+
+    public String getData() {
+        return data;
+    }
 
 }

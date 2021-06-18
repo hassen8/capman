@@ -30,38 +30,6 @@ public class main {
         System.out.println();
         Interface device = devices.next().next().next().next().next().next();
 
-//        while (devices.hasNext()) {
-//            Interface device = devices.next();
-//            System.out.println("Name             : " + device.name());
-//            System.out.println("Description      : " + device.description());
-//            System.out.println("Flags            : " + device.flags());
-//            if (device.addresses() != null) {
-//                System.out.println("Addresses        : ");
-//                Iterator<Address> addresses = device.addresses().iterator();
-//                while (addresses.hasNext()) {
-//                    Address address = addresses.next();
-//                    System.out.println("\tAddress      : " + address.address());
-//                    System.out.println("\tNetmask      : " + address.netmask());
-//                    System.out.println("\tBroadcast    : " + address.broadcast());
-//                    System.out.println("\tDestination  : " + address.destination());
-//                }
-//            }
-//            System.out.println();
-//        try (var pcap = service.live(device, new DefaultLiveOptions())) {
-//            try {
-//                pcap.loop(
-//                        1000,
-//                        (args, header, buffer) -> {
-//                            System.out.println("Args     : " + args);
-//                            System.out.println("Header   : " + header);
-//                            System.out.println("Packet   : " + buffer);
-//                        },
-//                        "Hello pcap!");
-//            } catch (Exception e) {
-//                System.err.println(e.getMessage());
-//
-//            }
-//        }
         try (var pcap = service.live(device, new DefaultLiveOptions())) {
             PacketHeader header = pcap.allocate(PacketHeader.class);
             PacketBuffer packetBuffer = pcap.allocate(PacketBuffer.class);
@@ -110,21 +78,36 @@ public class main {
     }
 }
 
-//        InetAddress addr;
-//        PcapNetworkInterface nif;
-//        int snapLen = 65536;
-//        try {
-//            addr = InetAddress.getByName("192.168.15.118");
-//            nif = Pcaps.getDevByAddress(addr);
-//            PromiscuousMode mode = PromiscuousMode.PROMISCUOUS;
-//            int timeout = 10;
-//            PcapHandle handle = nif.openLive(snapLen, mode, timeout);
-//            Packet packet = handle.getNextPacketEx();
-//            handle.close();
-//            IpV4Packet ipV4Packet = packet.get(IpV4Packet.class);
-//            Inet4Address srcAddr = ipV4Packet.getHeader().getSrcAddr();
-//            System.out.println(srcAddr);
-//        } catch (Exception e) {
-//            System.out.println(e);
+//        while (devices.hasNext()) {
+//            Interface device = devices.next();
+//            System.out.println("Name             : " + device.name());
+//            System.out.println("Description      : " + device.description());
+//            System.out.println("Flags            : " + device.flags());
+//            if (device.addresses() != null) {
+//                System.out.println("Addresses        : ");
+//                Iterator<Address> addresses = device.addresses().iterator();
+//                while (addresses.hasNext()) {
+//                    Address address = addresses.next();
+//                    System.out.println("\tAddress      : " + address.address());
+//                    System.out.println("\tNetmask      : " + address.netmask());
+//                    System.out.println("\tBroadcast    : " + address.broadcast());
+//                    System.out.println("\tDestination  : " + address.destination());
+//                }
+//            }
+//            System.out.println();
+//        try (var pcap = service.live(device, new DefaultLiveOptions())) {
+//            try {
+//                pcap.loop(
+//                        1000,
+//                        (args, header, buffer) -> {
+//                            System.out.println("Args     : " + args);
+//                            System.out.println("Header   : " + header);
+//                            System.out.println("Packet   : " + buffer);
+//                        },
+//                        "Hello pcap!");
+//            } catch (Exception e) {
+//                System.err.println(e.getMessage());
+//
+//            }
 //        }
 

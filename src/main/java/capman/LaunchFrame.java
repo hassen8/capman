@@ -43,6 +43,7 @@ public class LaunchFrame extends javax.swing.JFrame {
         LightOption = new javax.swing.JCheckBoxMenuItem();
         DarkOption = new javax.swing.JCheckBoxMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        about = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,6 +54,11 @@ public class LaunchFrame extends javax.swing.JFrame {
         btnStart.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         btnStart.setForeground(new java.awt.Color(0, 0, 0));
         btnStart.setText("Start");
+        btnStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStartActionPerformed(evt);
+            }
+        });
 
         File.setText("File");
 
@@ -83,6 +89,15 @@ public class LaunchFrame extends javax.swing.JFrame {
         MenuBar.add(ThemeOptions);
 
         jMenu1.setText("About");
+
+        about.setText("About App");
+        about.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutActionPerformed(evt);
+            }
+        });
+        jMenu1.add(about);
+
         MenuBar.add(jMenu1);
 
         setJMenuBar(MenuBar);
@@ -92,26 +107,27 @@ public class LaunchFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(274, Short.MAX_VALUE)
+                .addContainerGap(270, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblLogo)
-                        .addGap(263, 263, 263))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(410, 410, 410))))
+                        .addGap(410, 410, 410))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblLogo)
+                        .addGap(270, 270, 270))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(130, 130, 130)
+                .addGap(91, 91, 91)
                 .addComponent(lblLogo)
-                .addGap(53, 53, 53)
+                .addGap(92, 92, 92)
                 .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void LightOptionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_LightOptionItemStateChanged
@@ -121,6 +137,17 @@ public class LaunchFrame extends javax.swing.JFrame {
     private void DarkOptionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_DarkOptionItemStateChanged
         setTheme(evt,"dark");
     }//GEN-LAST:event_DarkOptionItemStateChanged
+
+    private void aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutActionPerformed
+       About obj = new About(this, rootPaneCheckingEnabled);
+       obj.setVisible(true);       
+    }//GEN-LAST:event_aboutActionPerformed
+
+    private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
+       DeviceList obj = new DeviceList();
+       obj.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_btnStartActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,6 +190,7 @@ public class LaunchFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem LightOption;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JMenu ThemeOptions;
+    private javax.swing.JMenuItem about;
     private javax.swing.JButton btnStart;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JLabel lblLogo;

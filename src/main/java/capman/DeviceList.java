@@ -28,8 +28,7 @@ public class DeviceList extends javax.swing.JFrame {
     /**
      * Creates new form DeviceList
      */
-    static 
-    DefaultListModel model;
+    static DefaultListModel model;
     GetDeviceList getdevicelist;
     int deviceIndex = -1;
     
@@ -54,15 +53,18 @@ public class DeviceList extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         btnSelect = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         list = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
-        File = new javax.swing.JMenu();
-        Back = new javax.swing.JMenuItem();
+        file = new javax.swing.JMenu();
+        back = new javax.swing.JMenuItem();
+        exit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         btnSelect.setText("Continue");
         btnSelect.addActionListener(new java.awt.event.ActionListener() {
@@ -70,8 +72,17 @@ public class DeviceList extends javax.swing.JFrame {
                 btnSelectActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 53;
+        gridBagConstraints.ipady = 53;
+        gridBagConstraints.insets = new java.awt.Insets(36, 0, 29, 0);
+        getContentPane().add(btnSelect, gridBagConstraints);
 
         list.setModel(model);
+        list.setAlignmentX(1.0F);
+        list.setAlignmentY(1.0F);
         list.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 listMouseClicked(evt);
@@ -81,45 +92,47 @@ public class DeviceList extends javax.swing.JFrame {
         list.getAccessibleContext().setAccessibleName("");
         list.getAccessibleContext().setAccessibleDescription("");
 
-        File.setText("File");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 310;
+        gridBagConstraints.ipady = 118;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.1;
+        gridBagConstraints.insets = new java.awt.Insets(48, 47, 30, 47);
+        getContentPane().add(jScrollPane1, gridBagConstraints);
 
-        Back.setText("Back");
-        Back.addActionListener(new java.awt.event.ActionListener() {
+        file.setText("File");
+        file.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackActionPerformed(evt);
+                fileActionPerformed(evt);
             }
         });
-        File.add(Back);
 
-        jMenuBar1.add(File);
+        back.setText("Back");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
+        file.add(back);
+
+        exit.setText("Exit");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+        file.add(exit);
+
+        jMenuBar1.add(file);
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(186, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(135, 135, 135))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(179, 179, 179))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(146, 146, 146)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                .addComponent(btnSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
-        );
-
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
@@ -130,8 +143,6 @@ public class DeviceList extends javax.swing.JFrame {
       }else {
           JOptionPane.showMessageDialog(this,"Please Select an a Device to listen to","Device not Selected",JOptionPane.WARNING_MESSAGE);
       }
-
-       
        
     }//GEN-LAST:event_btnSelectActionPerformed
         
@@ -139,12 +150,19 @@ public class DeviceList extends javax.swing.JFrame {
         deviceIndex= list.getSelectedIndex();
     }//GEN-LAST:event_listMouseClicked
 
-    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
-        this.setVisible(false);
+    private void fileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileActionPerformed
+
+    }//GEN-LAST:event_fileActionPerformed
+
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         LaunchFrame obj = new LaunchFrame();
         obj.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_BackActionPerformed
+    }//GEN-LAST:event_backActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+       this.dispose();
+    }//GEN-LAST:event_exitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,9 +202,10 @@ public class DeviceList extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem Back;
-    private javax.swing.JMenu File;
+    private javax.swing.JMenuItem back;
     private javax.swing.JButton btnSelect;
+    private javax.swing.JMenuItem exit;
+    private javax.swing.JMenu file;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JList<String> list;

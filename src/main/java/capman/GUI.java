@@ -31,7 +31,7 @@ public class GUI extends javax.swing.JFrame {
         tbmPackets = new DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                    "Time", "IP Version", "Source", "Destination"
+                    "Time", "IP Version", "Source", "Destination", "Protocol", "Data"
                 }
         );
         // Initialize thread value
@@ -46,7 +46,7 @@ public class GUI extends javax.swing.JFrame {
     // Add row to the table
     public void addRow(Packet packet) {
         tbmPackets.addRow(new Object[]{
-            packet.getTime(), packet.getIpVersion(), packet.getSource(), packet.getDest()
+            packet.getTime(), packet.getIpVersion(), packet.getSource(), packet.getDest(), packet.getProtocol(), packet.getData(),
         });
     }
 
@@ -69,6 +69,7 @@ public class GUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         scpTblPackets = new javax.swing.JScrollPane();
         tblPackets = new javax.swing.JTable();
@@ -187,6 +188,7 @@ public class GUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
   private void btnStartStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartStopActionPerformed
@@ -234,7 +236,9 @@ public class GUI extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Create and display the form */
+
+        com.formdev.flatlaf.FlatLightLaf.install();
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new GUI(-1).setVisible(true);
@@ -285,9 +289,9 @@ public class GUI extends javax.swing.JFrame {
 }
 
 class Details extends Thread {
-    
+
     Interface device;
-    
+
     public void run() {
         PacketSniffer packetSniffer = new PacketSniffer();
         Service service = packetSniffer.createService();
