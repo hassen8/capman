@@ -35,9 +35,11 @@ public class main {
             PacketBuffer packetBuffer = pcap.allocate(PacketBuffer.class);
             for (int i = 0; i < 1000; i++) {
                 try {
+                    System.out.println(pcap.stats());
                     pcap.nextEx(header, packetBuffer);
                     System.out.println("Header   : " + header);
                     System.out.println("Packet   : " + packetBuffer);
+                    
 
                     Ethernet ethernet = packetBuffer.cast(Ethernet.class);
                     System.out.println(ethernet.type());

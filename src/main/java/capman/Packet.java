@@ -1,5 +1,9 @@
 package capman;
 
+import pcap.spi.PacketBuffer;
+import pcap.spi.PacketHeader;
+import pcap.spi.Statistics;
+
 class Packet {
 
     String time;
@@ -8,7 +12,34 @@ class Packet {
     String dest;
     String data;
     String protocol;
+    String header;
+    String buffer;
+    String stats;
 
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+    public String getBuffer() {
+        return buffer;
+    }
+
+    public void setBuffer(String buffer) {
+        this.buffer = buffer;
+    }
+
+    public String getStats() {
+        return stats;
+    }
+
+    public void setStats(String stats) {
+        this.stats = stats;
+    }
+    
     public String getProtocol() {
         return protocol;
     }
@@ -56,5 +87,7 @@ class Packet {
     public String getData() {
         return data;
     }
+
+   
 
 }

@@ -5,6 +5,10 @@
  */
 package capman;
 
+import static capman.GUI.ip4C;
+import static capman.GUI.ip6C;
+import static capman.GUI.tcpC;
+import static capman.GUI.udpC;
 import java.util.Date;
 import pcap.codec.ethernet.Ethernet;
 import pcap.codec.ip.Ip4;
@@ -50,34 +54,42 @@ class CaptureTraffic extends Thread {
                     pcap.nextEx(header, packetBuffer);
 
                     Date date = new Date(header.timestamp().second() * 1000);
-                    packet.setTime(date.toString());
-
+                    packet.setTime(date.toString()); 
+                    packet.setHeader(String.valueOf(header));
+                    packet.setBuffer(String.valueOf(packetBuffer));
+                    packet.setStats(String.valueOf(pcap.stats())); 
                     Ethernet ethernet = packetBuffer.cast(Ethernet.class);
                     if (ethernet.type() == Ip4.TYPE) {
                         Ip4 ip4 = packetBuffer.readerIndex(ethernet.size()).cast(Ip4.class);
+                        ip4C++;
                         packet.setIpVersion("IPv4");
                         packet.setSource(ip4.source().getHostAddress());
                         packet.setDest(ip4.destination().getHostAddress());
                         if (ip4.protocol() == Tcp.TYPE) {
+                            tcpC++;
                             Tcp tcp = packetBuffer.readerIndex(ethernet.size() + ip4.size()).cast(Tcp.class);
                             packet.setProtocol("TCP");
                             packet.setData(String.valueOf(tcp));
                         } else if (ip4.protocol() == Udp.TYPE) {
+                            udpC++;
                             Udp udp = packetBuffer.readerIndex(ethernet.size() + ip4.size()).cast(Udp.class);
                             packet.setProtocol("UDP");
                             packet.setData(String.valueOf(udp));
                         }
 
                     } else if (ethernet.type() == Ip6.TYPE) {
+                        ip6C++;
                         Ip6 ip6 = packetBuffer.readerIndex(ethernet.size()).cast(Ip6.class);
                         packet.setIpVersion("IPv6");
                         packet.setSource(ip6.source().getHostAddress());
                         packet.setDest(ip6.destination().getHostAddress());
                         if (ip6.nextHeader() == Tcp.TYPE) {
+                            tcpC++;
                             Tcp tcp = packetBuffer.readerIndex(ethernet.size() + ip6.size()).cast(Tcp.class);
                             packet.setProtocol("TCP");
                             packet.setData(String.valueOf(tcp));
                         } else if (ip6.nextHeader() == Udp.TYPE) {
+                            udpC++;
                             Udp udp = packetBuffer.readerIndex(ethernet.size() + ip6.size()).cast(Udp.class);
                             packet.setProtocol("UDP");
                             packet.setData(String.valueOf(udp));

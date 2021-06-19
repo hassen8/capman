@@ -5,19 +5,10 @@
  */
 package capman;
 
+import app.LaunchFrame;
 import com.formdev.flatlaf.FlatLightLaf;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import pcap.spi.Address;
-import pcap.spi.Interface;
-import pcap.spi.Service;
-import pcap.spi.exception.ErrorException;
 
 /**
  *
@@ -31,7 +22,7 @@ public class DeviceList extends javax.swing.JFrame {
     static DefaultListModel model;
     GetDeviceList getdevicelist;
     int deviceIndex = -1;
-    
+
     public DeviceList() {
         model = new DefaultListModel();
         initComponents();
@@ -41,8 +32,7 @@ public class DeviceList extends javax.swing.JFrame {
         } catch (Exception e) {
         }
         System.out.println(getClass().getResource("/Resources/Logo.png"));
-        
-        
+
     }
 
     /**
@@ -55,6 +45,7 @@ public class DeviceList extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jLabel1 = new javax.swing.JLabel();
         btnSelect = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         list = new javax.swing.JList<>();
@@ -66,6 +57,17 @@ public class DeviceList extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Select the Network Interface");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipady = 6;
+        gridBagConstraints.insets = new java.awt.Insets(50, 0, 0, 0);
+        getContentPane().add(jLabel1, gridBagConstraints);
+
         btnSelect.setText("Continue");
         btnSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,7 +76,7 @@ public class DeviceList extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.ipadx = 53;
         gridBagConstraints.ipady = 53;
         gridBagConstraints.insets = new java.awt.Insets(36, 0, 29, 0);
@@ -94,7 +96,7 @@ public class DeviceList extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 310;
@@ -136,18 +138,18 @@ public class DeviceList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
-      if(list.getSelectedIndex()>=0){
-         GUI obj= new GUI(list.getSelectedIndex());
-         obj.setVisible(true);
-         this.setVisible(false);
-      }else {
-          JOptionPane.showMessageDialog(this,"Please Select an a Device to listen to","Device not Selected",JOptionPane.WARNING_MESSAGE);
-      }
-       
+        if (list.getSelectedIndex() >= 0) {
+            GUI obj = new GUI(list.getSelectedIndex());
+            obj.setVisible(true);
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Please Select an a Device to listen to", "Device not Selected", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnSelectActionPerformed
-        
+
     private void listMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listMouseClicked
-        deviceIndex= list.getSelectedIndex();
+        deviceIndex = list.getSelectedIndex();
     }//GEN-LAST:event_listMouseClicked
 
     private void fileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileActionPerformed
@@ -161,35 +163,14 @@ public class DeviceList extends javax.swing.JFrame {
     }//GEN-LAST:event_backActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-       this.dispose();
+        this.dispose();
     }//GEN-LAST:event_exitActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DeviceList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DeviceList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DeviceList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DeviceList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -199,13 +180,14 @@ public class DeviceList extends javax.swing.JFrame {
             }
         });
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem back;
     private javax.swing.JButton btnSelect;
     private javax.swing.JMenuItem exit;
     private javax.swing.JMenu file;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JList<String> list;

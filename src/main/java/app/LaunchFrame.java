@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package capman;
+package app;
 
+import app.About;
+import capman.DeviceList;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 
